@@ -1,10 +1,30 @@
+@font-face
+    font-family: "Montserrat"
+    src: url('./assets/fonts/MontserratRegular.woff2') format("woff2")
+    font-weight: 400
+    font-display: swap
+    font-style: normal
+@font-face
+    font-family: "Montserrat"
+    src: url('./assets/fonts/MontserratMedium.woff2') format("woff2")
+    font-weight: 500
+    font-display: swap
+    font-style: normal
+@font-face
+    font-family: "Montserrat"
+    src: url('./assets/fonts/MontserratSemiBold.woff2') format("woff2")
+    font-weight: 600
+    font-display: swap
+    font-style: normal
 *,*::before,*::after
     padding: 0
     margin: 0
     border: 0
+    outline: 0
     -moz-box-sizing: border-box
     -webkit-box-sizing: border-box
     box-sizing: border-box
+    color: #ffffff
 ul,li
     list-style: none
 *::focus,*::active
@@ -19,9 +39,11 @@ html,body
     font-size: 100%
     line-height: 1
     font-size: 14px
+    font-family: "Montserrat"
     -ms-text-size-adjust: 100%
     -moz-text-size-adjust: 100%
     -webkit-text-size-adjust: 100%
+    background-color: #fdf0e9
 input,button,textarea
     font-family: inherit
 input:-ms-clear
@@ -40,3 +62,22 @@ img
 h1,h2,h3,h4,h5,h6
     font-size: inherit
     font-weight: 400
+
+.container
+    max-width: 1560px
+    margin: 0 auto
+
+.active
+    color: #16CD53 !important
+
+@media screen and (max-width: 1700px)
+    .container
+        max-width: 1160px
+
+@media screen and (max-width: 1230px)
+    .container
+        max-width: 990px
+
+@media screen and (max-width: 1040px)
+    .container
+        max-width: 90%

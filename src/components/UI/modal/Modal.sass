@@ -1,0 +1,97 @@
+.modal
+    position: fixed
+    z-index: 5
+    top: 0
+    left: 0
+    width: 100vw
+    height: 100vh
+    background-color: rgb(0, 0, 0, 0.4)
+    display: flex
+    align-items: center
+    justify-content: center
+    opacity: 0
+    pointer-events: none
+    transition: 0.1s linear
+    &.active
+        opacity: 1
+        pointer-events: all
+    .modal__content
+        background-color: #fdf0e9
+        color: #5C2000
+        padding: 180px
+        border-radius: 20px
+        display: flex
+        flex-direction: column
+        align-items: center
+        position: relative
+        .modal__content-title
+            color: #5C2000
+            font-size: 50px
+            font-weight: 600
+            margin-bottom: 75px
+            text-align: center
+        .modal__content-contact
+            display: flex
+            flex-direction: column
+            align-items: center
+            .modal__contact-list
+                display: flex
+                align-items: center
+            .modal__contact-item
+                &:not(:last-child)
+                    margin-right: 30px
+            .modal__contact-link
+                font-size: 25px
+                color: #5C2000
+                transition: 0.1s linear
+                &:hover
+                    color: #16CD53
+            .modal__content-legal
+                position: absolute
+                bottom: 20px
+                color: #5C2000
+                font-size: 16px
+                a
+                    color: inherit
+                    transition: 0.2s linear
+                    font-size: 18px
+                    &:hover
+                        color: #16CD53
+
+@media screen and (max-width: 1230px)
+    .modal 
+        .modal__content
+            padding: 100px
+            .modal__content-title
+                margin-bottom: 40px
+
+@media screen and (max-width: 1040px)
+    .modal 
+        .modal__content
+            padding: 100px 15px
+            width: 80%
+            .modal__content-contact
+                .modal__contact-list
+                    flex-wrap: wrap
+                .modal__contact-item
+                    flex: 1 1 32%
+                    text-align: center
+                    margin-bottom: 15px
+                    &:not(:last-child)
+                        margin-right: 0px
+
+@media screen and (max-width: 650px)
+    .modal 
+        .modal__content
+            padding: 75px 5px
+            .modal__content-title
+                font-size: 30px
+            .modal__content-contact
+                .modal__contact-item
+                    flex: 1 1 45%
+                .modal__contact-link
+                    font-size: 18px
+                .modal__content-legal
+                    font-size: 11px
+                    a
+                        font-size: 13px

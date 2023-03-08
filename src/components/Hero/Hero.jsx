@@ -1,10 +1,14 @@
 import React from 'react';
+import './Hero.sass'
 
-const Hero = () => {
+const Hero = (props) => {
     return (
-        <div>
-            
-        </div>
+        <section className='hero'>
+            <div className='container hero__container'>
+                <h2 className="hero__title">{props.title}</h2>
+                <p className="hero__descr">{props.descr}</p>
+            </div>
+        </section>
     );
 }
 

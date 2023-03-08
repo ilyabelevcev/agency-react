@@ -1,0 +1,40 @@
+.hero
+    background-color: rgb(40, 41, 62)
+    height: 60vh
+    position: relative
+    .hero__container
+        display: flex
+        flex-direction: column
+        align-items: center
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%,-50%)
+    .hero__title
+        font-size: 72px
+        font-weight: 600
+        margin-bottom: 50px
+        text-align: center
+    .hero__descr
+        font-size: 16px
+        line-height: 1.4
+        text-align: center
+        max-width: 900px
+
+@media screen and (max-width: 1700px)
+    .hero
+        height: 50vh
+        .hero__descr
+            font-size: 14px
+            max-width: 800px
+
+@media screen and (max-width: 1040px)
+    .hero
+        // height: 45vh
+        .hero__container
+            width: 100%
+        .hero__title
+            font-size: 52px
+        .hero__descr
+            font-size: 14px
+            max-width: 100%

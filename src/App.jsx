@@ -1,29 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.sass'
-import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
-import portfolio from './components/Works/portfolio.json'
+import Home from './pages/Home';
+import Blog from './pages/Blog';
+import Portfolio from './pages/Portfolio';
+import Footer from './components/Footer/Footer'
+import Modal from './components/UI/modal/Modal';
+import ModalContact from './components/UI/modal/ModalContact';
 
-function App() {
-    const [works, setWorks] = useState([])
-    useEffect(() => {
-        setWorks(portfolio.works)
-    }, [setWorks]);
-    console.log(works)
+const App = () => {
+    const [activeModal, setActiveModal] = useState(false)
+
     return (
         <div className='site-container'>
-            <Header/>
-            <div>
-                {works.map((work) => 
-                    <div key={work.id}>
-                        <div>{work.title}</div>
-                        <img style={{maxWidth: '100px'}} src={work.image} alt={work.id} />
-                    </div>
-                )}
-            </div>
+            <Header activeModal={activeModal} setActiveModal={setActiveModal}/>
+            <Routes>
+                <Route path='/' element={<Home/>}/>
+                <Route path='/blog' element={<Blog/>}/>
+                <Route path='/portfolio' element={<Portfolio/>}/>
+            </Routes>
             <Footer/>
+            <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+                <ModalContact title="Contact me"/>
+            </Modal>
         </div>
     );
 }
 
 export default App;
+

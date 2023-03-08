@@ -1,0 +1,111 @@
+.header
+    background-color: rgb(40, 41, 62)
+    padding: 16px 0
+    .header__container
+        display: flex
+        align-items: center
+        justify-content: space-between
+    .header__logo
+        display: flex
+        align-items: center
+        .header__logo-name
+            font-size: 30px
+    .header__nav
+        display: flex
+        align-items: center
+    .header__nav-list
+        display: flex
+        align-items: center
+        .header__list-item
+            margin-right: 70px
+        .header__item-link
+            font-weight: 500
+            font-size: 22px
+    .header__burger
+        width: 30px
+        height: 20px
+        position: relative
+        background-color: transparent
+        border: 0
+        cursor: pointer
+        display: none
+        .header__burger-line
+            display: inline-block
+            background-color: #fff
+            position: absolute
+            right: 0
+            top: 9px
+            width: 100%
+            height: 2px
+        &::after,&::before
+            content: ''
+            position: absolute
+            background-color: #fff
+            right: 0
+            width: 100%
+            height: 2px
+        &::before
+            top: 0
+        &::after
+            bottom: 0
+
+@media screen and (max-width: 1700px)
+    .header
+        .header__logo
+            .header__logo-icon
+                max-width: 40px
+                max-height: 40px
+            .header__logo-name
+                font-size: 25px
+        .header__nav-list
+            .header__item-link
+                font-size: 18px
+
+@media screen and (max-width: 1040px)
+    .header
+        .header__logo
+            position: relative
+            z-index: 3
+        .header__nav
+            background-color: rgb(0, 0, 0, 0.9)
+            position: fixed
+            z-index: 2
+            width: 100vw
+            height: 100vh
+            top: 0
+            left: 0
+            flex-direction: column
+            justify-content: center
+            transform: translateX(-101%)
+            transition: 0.2s linear
+            &.active
+                transform: translateX(0)
+        .header__nav-list
+            flex-direction: column
+            .header__list-item
+                margin-right: 0
+                margin-bottom: 20px
+        .header__burger
+            position: relative
+            z-index: 3
+            width: 30px
+            height: 20px
+            background-color: transparent
+            border: 0
+            cursor: pointer
+            display: block
+            &.active
+                position: fixed
+                right: 5%
+                .header__burger-line
+                    opacity: 0
+                &::before
+                    transform: rotate(45deg)
+                    top: 9px
+                &::after
+                    transform: rotate(-45deg)
+                    bottom: 9px
+            .header__burger-line
+                transition: 0.1s linear
+            &::before,&::after
+                transition: 0.2s linear
