@@ -6,7 +6,7 @@ const HeaderNav = ({onClick, setActiveModal, ...props}) => {
     return (
         <nav onClick={onClick} className={props.className}>
             <HeaderLinks links={props.links}/>
-            <MyButton onClick={() => setActiveModal(true)}>Contact</MyButton>
+            <MyButton button='light' onClick={() => setActiveModal(true)}>Contact</MyButton>
         </nav>
     );
 }

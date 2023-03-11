@@ -1,16 +1,95 @@
-import React from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
+import axios from 'axios';
 import Hero from '../components/Hero/Hero';
+import PostList from '../components/Posts/PostList';
+import PostForm from '../components/Posts/PostForm'
+
+import '../components/Posts/Posts.sass'
+import Modal from '../components/UI/modal/Modal';
+import MyInput from '../components/UI/input/MyInput';
+import MyButton from '../components/UI/button/MyButton';
+import { getPageCount, getPagesArray } from '../components/Posts/posts';
 
 const Blog = () => {
+    const [posts, setPosts] = useState([]);
+    const [totalPages, setTotalPages] = useState(0)
+    const [limit, setLimit] = useState(10)
+    const [page, setPage] = useState(1)
+    const [isLoading, setIsLoading] = useState(false)
+    const [searchQuery, setSearchQuery] = useState('')
+    const [activeModal, setActiveModal] = useState(false)
+
+    let pagesArray = getPagesArray(totalPages)
+
+    useEffect(() => {
+        fetchPosts(limit, page)
+    }, [limit, page])
+
+    const searchedPosts = useMemo(() => {
+        return posts.filter(post => post.title.toLowerCase().includes(searchQuery.toLowerCase()))
+        // startsWith - если нужно искать по началу строки
+    }, [searchQuery, posts])
+
+    async function fetchPosts(limit, page) {
+        setIsLoading(true)
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+            params: {
+                _limit: limit,
+                _page: page,
+            }
+        })
+        setPosts(response.data)
+        const totalCount = response.headers['x-total-count']
+        setTotalPages(getPageCount(totalCount, limit))
+        setIsLoading(false)
+    }
+
+    const changePage = (page) => {
+        setPage(page)
+        fetchPosts(limit,page)
+    }
+
+    const createPost = (newPost) => {
+        setPosts([newPost, ...posts])
+    }
+    const removePost = (post) => {
+        setPosts(posts.filter(p => p.id !== post.id))
+    }
+
     return (
         <main>
             <Hero
                 title='Blog' 
                 descr='Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi quaerat quae asperiores dolor voluptates recusandae neque? Perferendis saepe animi earum, voluptate dolor doloremque omnis sit, quaerat tempore, impedit eum ducimus.'
             />
-            <section className='about'>
-                <div style={{color: "transparent"}} className="container">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum dolorem accusamus recusandae est aliquid culpa quam, veritatis, cum quae cumque possimus vel. Cumque, quam neque corrupti officia distinctio numquam assumenda explicabo vero temporibus incidunt veniam! Dignissimos quo sequi numquam modi reprehenderit, nihil doloremque esse quam, hic consequatur incidunt tempora sunt eveniet quas soluta exercitationem reiciendis. Dolorem, rem impedit quod dicta quibusdam dolores laborum excepturi facilis necessitatibus. Cum magnam voluptatum necessitatibus numquam aut sint distinctio, exercitationem quae illum atque ab, reprehenderit adipisci totam nihil sed eaque dolor voluptas. Mollitia nam animi, totam libero facere, natus veritatis tempore explicabo quod illo ipsum nisi repellat nemo excepturi quis! Explicabo dolore tempora architecto quas natus hic ipsam inventore fugit nulla obcaecati sapiente, est optio nostrum ipsum, repudiandae neque alias nemo blanditiis deleniti cum totam sit omnis ad. Expedita, praesentium iusto repellendus eos veniam aperiam voluptates magnam voluptate beatae dicta laboriosam. Voluptatibus nulla aliquam enim aliquid beatae quos labore laudantium inventore molestias dicta, qui ab. Amet porro, animi asperiores itaque repellendus nam incidunt recusandae distinctio tempore fugit! Ex ea, iure dolores accusantium dolore dolorum facere recusandae sit minima dignissimos cumque odit magnam, eum laudantium sed, eaque aut optio laborum dicta itaque nesciunt ipsum ratione perferendis! Culpa impedit obcaecati animi blanditiis a libero, rem dolorem eaque. Debitis alias expedita laudantium delectus nisi quaerat unde earum fugit facilis possimus ducimus dicta, minima nostrum vero autem maxime, quisquam quas officia! Quia fuga dolorum id, illum obcaecati iusto fugiat, commodi excepturi facere recusandae suscipit at nisi dolor saepe sit optio doloribus, dicta consequatur aut necessitatibus voluptas qui! Laboriosam, sint pariatur, explicabo, commodi fugit eos est obcaecati iste veritatis amet reiciendis praesentium neque ipsum dolorem impedit molestias laborum vel ipsam voluptate illum. Reprehenderit dicta illum delectus. Maxime possimus recusandae nisi, accusamus ab architecto saepe voluptate beatae quaerat, voluptatum veniam! Quis aut ipsam officia sit facilis? Voluptates tempora aut, asperiores est eveniet doloribus nostrum in error vel dolorum et nisi aperiam laudantium provident eos porro cum, id corporis beatae fugiat neque vero ullam earum nobis. Consectetur, nihil magnam sequi, amet quae inventore ut sunt mollitia odio facere rerum necessitatibus minima? Et veritatis nisi repellat voluptates quisquam magnam fugit sit facilis? Omnis minima atque reiciendis nostrum asperiores adipisci mollitia, nam fugiat in, excepturi impedit, libero dolorum recusandae exercitationem quod laboriosam modi laborum dolor sint doloremque voluptate quos? Veniam dicta nesciunt fugit iste corrupti quos sunt voluptates eaque praesentium perferendis suscipit accusantium esse at molestiae autem voluptatum asperiores ratione blanditiis, quas architecto expedita? Id illum cum officia doloremque nemo quod laborum quasi, totam aliquid harum maiores aut sed modi iste adipisci repellat numquam? Cum expedita perspiciatis vitae officiis aperiam obcaecati ducimus provident quasi iste exercitationem temporibus, sint dolores. Harum iusto magni neque suscipit adipisci ab enim deserunt vero. Saepe ducimus explicabo atque quibusdam eligendi, consequuntur id temporibus sit ratione quos nulla porro reprehenderit accusamus praesentium totam. Consectetur asperiores corporis quia doloribus culpa deserunt velit nisi non ea expedita saepe dolorem ratione rerum ut ex minima, optio consequuntur reprehenderit eaque nihil eum maxime numquam voluptate aliquid! Explicabo delectus, mollitia odio excepturi fugit perspiciatis incidunt sed vitae rem earum laborum, nulla cupiditate recusandae voluptates quidem aut, impedit obcaecati voluptate doloribus numquam. Laudantium doloribus ipsum, in aspernatur sint quisquam nam veniam reiciendis numquam. Perferendis exercitationem ex repellat incidunt tempore nulla natus ullam eveniet qui quos odio omnis dolorum, consequuntur, quaerat quibusdam culpa minus ipsam nobis. Quibusdam sed adipisci, quasi omnis ipsa iusto, voluptatem, quis blanditiis cum dignissimos qui suscipit nulla? Saepe nobis, autem quisquam magnam voluptatibus minima eos aut illo atque sequi tempora at enim eligendi, aliquam cumque rem quibusdam? Amet magnam sequi deserunt voluptatum esse ducimus ratione hic incidunt pariatur. Quasi, quibusdam tempora? Nemo labore nobis ex nam consectetur obcaecati dolorem eveniet rem illum deserunt error accusamus at id illo unde veritatis, magnam tempore excepturi ipsum mollitia. Eos temporibus dolorem vero ipsum voluptatem mollitia animi nemo nostrum esse quia ad omnis est at voluptate, laudantium quas possimus deleniti delectus quasi. Quam tempora aspernatur voluptatem, dolores minus facere quo rem quidem dolorum, amet fuga mollitia, commodi praesentium! Veniam, suscipit quas fuga libero consectetur tenetur, alias, asperiores laborum ex repellendus saepe doloribus in inventore ipsum eligendi tempore molestias fugiat rerum perferendis placeat blanditiis. Nisi ullam deleniti quo sunt soluta magni repellat perspiciatis accusantium possimus ratione sit consequatur, quaerat architecto nam ut, debitis non odit mollitia? Repudiandae placeat impedit obcaecati sequi ut delectus cumque corporis officiis nihil vel voluptates nulla voluptate neque cum a, fuga nobis, nisi libero? Quia, alias qui odit et perspiciatis praesentium aspernatur? Magni ex, expedita deleniti distinctio quo nesciunt minus assumenda culpa fuga veritatis voluptatem consectetur? Cumque doloremque eos mollitia odit perspiciatis fugiat eum omnis aut eius saepe pariatur iste, quibusdam distinctio nemo quae, recusandae inventore ducimus fugit ex, voluptatum dicta consequatur amet harum voluptas. Minima molestias quam debitis totam sunt autem nobis iusto obcaecati cupiditate? Excepturi, quis sapiente laudantium molestias, officiis corrupti eveniet vero possimus quam dolore doloribus architecto provident facilis ut alias, veritatis id soluta nisi corporis? Aut rem ipsam inventore tempora dolorem, delectus eligendi facere nulla dolorum aspernatur in voluptate et similique. Sed, officia! Sint amet voluptatem vero consequuntur animi veniam nemo. Quod recusandae consequatur, autem dolore provident et quibusdam earum. Vitae dolore veritatis iure illo earum doloremque, nisi nam unde id maiores praesentium exercitationem provident! Et quae in vitae explicabo ea atque sequi sed maiores possimus sint quo iusto, quaerat cum quia unde? Maxime error ea molestias natus dignissimos ab non, temporibus ut enim ullam! Quis ducimus recusandae quo quod animi possimus, minus libero. Quam, libero ex. Explicabo praesentium saepe porro error! Qui quos repudiandae a repellat cumque fuga totam asperiores consequatur deleniti ut, quas mollitia, voluptatibus dolore ad vero perspiciatis consectetur! Culpa ex voluptas deserunt laudantium, possimus saepe dicta porro doloribus, doloremque similique esse ratione corporis reprehenderit distinctio dolore delectus deleniti quasi aliquam veniam quos! Cumque deleniti laborum, officia magnam fugit quisquam sequi officiis eligendi vero corrupti culpa ipsa repellat nam, saepe earum delectus ut suscipit! Exercitationem neque ex quas harum blanditiis optio, totam vel reiciendis pariatur beatae aliquid non vero, praesentium voluptatem voluptas! Sunt labore porro odit doloremque. Iusto quaerat aliquid, quia maxime ullam obcaecati ipsum iure, earum unde, minus quidem suscipit fugiat sequi explicabo optio quae molestias quasi. Reiciendis aliquid nulla, voluptatum a saepe cum cupiditate similique praesentium deserunt repellat nostrum numquam pariatur. Aliquam maiores repellendus est itaque? Necessitatibus amet magnam tenetur qui, iste quasi distinctio voluptatibus natus, vel itaque esse deserunt sint suscipit quod, ipsam vitae cupiditate dolor libero sapiente consequuntur obcaecati praesentium laborum fuga. Voluptatibus autem, qui repellat obcaecati, repellendus expedita cupiditate earum blanditiis, in quos quasi tempore! Magni perferendis temporibus magnam. Ipsam repellat reprehenderit, minus blanditiis sequi voluptatem beatae, sunt laudantium quidem placeat molestiae animi vel recusandae molestias est harum nostrum sed nemo aliquid! Quos assumenda sequi nam? At temporibus rem optio dignissimos adipisci, magnam ipsum suscipit sint quam veritatis corporis repellendus placeat odit molestiae eos quas eveniet quod? Corporis nulla, consectetur quo cupiditate doloremque veniam vero, illo illum enim cum numquam repudiandae odio similique incidunt accusantium ab error, inventore placeat! Soluta maxime ea dolore aut hic inventore corporis officiis quas ex deleniti minus quis perspiciatis, eum necessitatibus quod eligendi neque praesentium quo. Blanditiis ducimus enim, ipsa rerum officia sunt voluptatum accusantium nobis, aspernatur cum eos nemo saepe ex sit quod ratione tempore nostrum laboriosam. Odit praesentium itaque at laboriosam illo inventore mollitia officia, voluptatum adipisci quo ipsum accusamus sunt velit facere consectetur vero totam voluptatibus fugit. Fuga dolor illo reprehenderit, inventore dolorem perferendis blanditiis molestias nihil corrupti, non voluptas. Aperiam optio veritatis enim facere dicta fugit omnis quibusdam aut, totam illo ratione exercitationem quaerat placeat quos maxime eligendi ex tenetur, sequi recusandae quas repellat corporis? Quaerat error necessitatibus pariatur facere placeat perspiciatis aliquid odio, iure beatae repudiandae similique a nisi vero dolorum illum qui quas assumenda tempora, blanditiis cupiditate dicta. Libero natus delectus omnis. Commodi impedit eius dolorem vitae possimus nisi magni veniam consequuntur, tempora quisquam labore, nostrum numquam obcaecati magnam accusamus, quia minus voluptatem tempore id a sunt. Nesciunt eum, sequi ea blanditiis ducimus, minima delectus deleniti saepe minus obcaecati laudantium corrupti eos expedita velit id unde quisquam. Totam ducimus delectus blanditiis consectetur quas ea ipsam rem neque, dolores enim tempore? Cupiditate alias voluptatem ex, architecto sunt earum incidunt odit a itaque minus distinctio dolorem, nostrum quo ullam ipsum vero. Nulla culpa distinctio non itaque magni animi molestias voluptatum corrupti consectetur, laborum quos inventore, reprehenderit quae amet minus et facilis velit accusantium vel! Officia consequuntur corrupti in tempore facere fugit a esse fugiat assumenda tempora velit optio quidem deleniti sit incidunt praesentium aut rerum aspernatur, alias aliquam officiis obcaecati ullam et. Dignissimos minima aut temporibus tempora cumque ducimus nesciunt corrupti modi consequuntur natus. Quisquam tempora atque error laboriosam nulla praesentium, reiciendis explicabo! Obcaecati labore iste, distinctio voluptatibus tempora quisquam neque veniam id eaque cum quasi blanditiis rerum, exercitationem aspernatur dolorem vero accusamus at! Laudantium sunt porro accusamus hic. At explicabo nemo veritatis quidem iure reiciendis laborum vero! Vero inventore quisquam fugit explicabo dolores quibusdam amet facilis exercitationem repudiandae sit culpa illo dolorem placeat repellendus, doloremque delectus. Sequi, doloremque necessitatibus exercitationem magnam consequatur, ipsam sint nulla et beatae dolorem distinctio quasi debitis ab blanditiis officia eaque sed, suscipit illo reprehenderit accusantium temporibus. Excepturi porro alias eius nam, expedita, soluta vel accusantium rem quibusdam natus aliquam ipsam id veritatis saepe earum, ut cum quis velit voluptas itaque hic repellendus dicta? Quo illum nostrum rerum maiores id? Nesciunt quos facilis at necessitatibus? Beatae obcaecati similique, aspernatur eius, debitis nesciunt facilis mollitia iure odit quo molestias sequi recusandae eveniet necessitatibus optio veniam quae minima assumenda! Temporibus facere animi pariatur maxime reprehenderit eius ducimus harum sed earum dolore sint architecto, eveniet modi totam voluptatum et itaque placeat odit explicabo soluta officia perferendis maiores. Tenetur perspiciatis, impedit aperiam officiis non consequuntur nobis, veniam modi facere at ipsum aspernatur ducimus accusantium consequatur ipsa blanditiis? Sapiente in recusandae vitae, dolorem error fugit quo facilis, veniam minima aut vero eius omnis, quis culpa cumque obcaecati! Perferendis, sit repellendus est temporibus modi harum, accusantium ea nobis obcaecati non similique id tempore. Excepturi molestiae a dignissimos, minus exercitationem aliquid tempora dolores voluptates labore voluptatum non soluta, maxime nulla enim repellendus ullam neque in porro quaerat ut cumque accusantium? Veritatis, neque temporibus et eveniet necessitatibus dolores saepe? Officia consectetur temporibus nostrum necessitatibus libero magnam reprehenderit ducimus praesentium vitae at consequuntur voluptate pariatur, et hic facere saepe eveniet cupiditate ea amet id beatae non! Modi, iusto quia possimus tempora, sint dignissimos ex reprehenderit explicabo, dolorem labore omnis. Itaque ea non quos placeat repellat quod esse dolor eveniet nobis eius fugit pariatur accusamus aperiam expedita quisquam, id saepe provident. Nostrum minus molestiae, magnam, sed sint officia ad ducimus, laudantium doloremque suscipit aspernatur? Tempora itaque, omnis ipsa explicabo reiciendis facilis tempore impedit odio harum maiores ducimus. Ut, voluptate quidem amet ipsa molestiae voluptatum nemo rerum commodi provident qui praesentium at saepe obcaecati aliquid, maxime molestias repellendus eos quaerat nihil. Id, beatae! Odio, reprehenderit. Deleniti tempore rerum eligendi tempora voluptate cumque magni, eius odit, debitis veritatis odio ducimus, ut sunt laborum natus earum! Cum, facere aspernatur! Quam provident dignissimos vero omnis repudiandae quibusdam esse a aspernatur ipsum eveniet? Iusto alias modi molestiae reiciendis dolore? Quidem officiis inventore quia libero nesciunt iste dolorem nisi eos veniam possimus, dolore exercitationem aliquid. Ut labore animi optio nemo placeat officia a eius, omnis, facilis tempora quaerat veritatis quisquam laboriosam natus. Debitis tempora neque iure repellat. Voluptatibus dolor quisquam corrupti dolores vitae ratione quis, aspernatur natus quo quibusdam autem voluptatum inventore, nulla, sit soluta! Nulla veritatis asperiores suscipit unde ducimus aut rem incidunt, delectus necessitatibus voluptates nihil, minus dolores est beatae? Culpa dolor molestias impedit enim tempore sequi consequatur debitis amet, voluptates dolore, porro recusandae consectetur quas soluta provident accusantium eligendi? Ipsam aut nobis quis maiores alias tempore neque culpa eius expedita laudantium suscipit sapiente repudiandae amet, eligendi doloribus deserunt dolorem, minima at, laborum voluptatum quaerat explicabo molestias dolor doloremque? Qui earum necessitatibus itaque neque accusamus, excepturi vero est voluptatibus voluptate minus ex esse nihil. Eaque deserunt necessitatibus maiores minus earum animi cupiditate.
+            <section className='blog'>
+                <div className="container blog__container">
+                    <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+                        <PostForm create={createPost} setActiveModal={setActiveModal}/>
+                    </Modal>
+                    <MyInput 
+                        input='input dark'
+                        placeholder='Search...' 
+                        onChange={e => setSearchQuery(e.target.value)}
+                    />
+                    <MyButton button='button dark' onClick={() => setActiveModal(true)}>Add post</MyButton>
+                    <div className='blog__pages-list'>
+                        {pagesArray.map(p => 
+                            <span 
+                                onClick={() => changePage(p)}
+                                key={p}
+                                className={page === p ? 'current-page blog__pages-item' : 'blog__pages-item'} 
+                            >
+                                {p}
+                            </span>    
+                        )}
+                    </div>
+                    <PostList 
+                        style={{flex: '1 1 100%'}}
+                        isLoading={isLoading} 
+                        posts={searchedPosts}
+                        remove={removePost}
+                    />
                 </div>
             </section>
         </main>

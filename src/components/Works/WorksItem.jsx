@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const WorksItem = ({work, onClick, ...props}) => {
+const WorksItem = ({work, onClick}) => {
     const [activeWork, setActiveWork] = useState(false);
 
     const toogleActive = () => {

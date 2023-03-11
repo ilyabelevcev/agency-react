@@ -85,7 +85,7 @@ function Portfolio() {
                     />
                     {selectedWork === 'Show All' &&
                         <MyButton 
-                            style={{color: "#333", borderColor: "currnetColor", marginTop: '50px'}}
+                            button='button dark'
                             disabled={portfolio.length === sortedWorks.length || !works.length} 
                             onClick={addVisibleWorks} 
                         >

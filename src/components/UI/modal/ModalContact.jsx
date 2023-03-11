@@ -47,9 +47,6 @@ const ModalContact = (props) => {
                     >Facebook</a>
                 </li>
             </ul>
-            <p className="modal__content-legal">
-                &#169; Developed by <a href="https://ilyabelevcev.com/" target='_blank' rel="noreferrer">ILYABELEVCEV</a> 2023
-            </p>
         </div>
     );
 }

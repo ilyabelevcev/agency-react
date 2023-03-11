@@ -3,7 +3,7 @@ import styles from './MyButton.module.sass'
 
 const MyButton = ({children, ...props}) => {
     return (
-        <button {...props} className={styles.myBtn}>
+        <button className={` ${props.button} ${styles.myBtn}`} {...props}>
             {children}
         </button>
     );

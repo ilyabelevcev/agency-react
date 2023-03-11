@@ -1,4 +1,5 @@
-.myBtn
+.myInput
+    width: 100%
     padding: 18px 35px
     background-color: transparent
     border-width: 1px
@@ -7,19 +8,20 @@
     font-size: 22px
     font-weight: 400
     transition: 0.1s linear
-    &:disabled
-        display: none
     &:hover
         border-color: transparent
         background-color: #00000033
-
+    &:focus:hover
+        background-color: transparent
+        border-color: currentColor
+        
 @media screen and (max-width: 1700px)
-    .myBtn
+    .myInput
         padding: 14px 30px
         font-size: 16px
 
 @media screen and (max-width: 650px)
-    .myBtn
+    .myInput
         &:hover
             border-color: currentColor
             background: none !important

@@ -1,0 +1,97 @@
+.blog
+    padding: 50px 0 100px 0
+    .blog__container
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-between
+        color: #5C2000
+    .input
+        flex: 1 1 60%
+        margin-right: 10px
+    .button
+        flex: 1 1 20%
+    .blog__posts-heading
+        text-align: center
+        color: currentColor
+        font-size: 22px
+    .blog__posts-list
+        display: flex
+        align-items: center
+        flex-wrap: wrap
+        margin: -10px
+        .blog__list-item
+            position: relative
+            flex: 1 1 41%
+            display: flex
+            align-items: center
+            justify-content: space-between
+            width: 100%
+            padding: 10px
+            margin: 10px
+            border: 1px solid #5C2000
+            border-radius: 5px
+            min-height: 150px // убрать при необходимости
+        .blog__item-content
+            color: #5C2000
+        .blog__item-heading
+            color: inherit
+            font-size: 20px
+        .blog__item-descr
+            color: inherit
+            font-size: 16px
+        .blog__item-btns
+            position: absolute
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+            background-color: #00000070
+            display: flex
+            align-items: center
+            justify-content: center
+            opacity: 0
+            pointer-events: none
+            transition: 0.1s linear
+            &.active-post
+                opacity: 1
+                pointer-events: all
+            button
+                padding: 5px 15px
+                &:not(:last-child)
+                    margin-right: 25px
+    .blog__pages-list
+        width: 100%
+        display: flex
+        justify-content: flex-end
+        margin: 30px 0px
+        .blog__pages-item
+            font-size: 18px
+            padding: 10px
+            color: #5C2000
+            cursor: pointer
+            &.current-page
+                background-color: #cccccc89
+                border-radius: 6px
+
+@media screen and (max-width: 1040px)
+    .blog
+        .blog__posts-list
+            flex-direction: column
+            flex-wrap: nowrap
+            margin: 0
+
+@media screen and (max-width: 650px)
+    .blog
+        .blog__container
+            justify-content: center
+        .input
+            flex: 1 1 100%
+            margin-right: 0
+            margin-bottom: 20px
+        .button
+            flex: 1 1 100%
+            max-width: 50%
+        .blog__pages-list
+            justify-content: center
+            .blog__pages-item
+                padding: 6px
