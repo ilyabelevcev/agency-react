@@ -20,6 +20,11 @@ const Blog = () => {
     const [activeModal, setActiveModal] = useState(false)
 
     let pagesArray = getPagesArray(totalPages)
+    let pagesCount = [
+        {id: 0, count: 10},
+        {id: 1, count: 15},
+        {id: 2, count: 20},
+    ]
 
     useEffect(() => {
         fetchPosts(limit, page)
@@ -54,7 +59,6 @@ const Blog = () => {
     const removePost = (post) => {
         setPosts(posts.filter(p => p.id !== post.id))
     }
-
     return (
         <main>
             <Hero
@@ -72,16 +76,29 @@ const Blog = () => {
                         onChange={e => setSearchQuery(e.target.value)}
                     />
                     <MyButton button='button dark' onClick={() => setActiveModal(true)}>Add post</MyButton>
-                    <div className='blog__pages-list'>
-                        {pagesArray.map(p => 
-                            <span 
-                                onClick={() => changePage(p)}
-                                key={p}
-                                className={page === p ? 'current-page blog__pages-item' : 'blog__pages-item'} 
-                            >
-                                {p}
-                            </span>    
-                        )}
+                    <div className='blog__pages-wrapper'>
+                        <div className="blog__count-list">
+                                {pagesCount.map(p =>
+                                    <span
+                                        onClick={() => setLimit(p.count)}
+                                        key={p.id}
+                                        className={limit === p.count ? 'current-limit blog__count-item' : 'blog__count-item'}
+                                    >
+                                        {p.count}
+                                    </span>    
+                                )}
+                        </div>
+                        <div className='blog__pages-list'>
+                            {pagesArray.map(p => 
+                                <span 
+                                    onClick={() => changePage(p)}
+                                    key={p}
+                                    className={page === p ? 'current-page blog__pages-item' : 'blog__pages-item'} 
+                                >
+                                    {p}
+                                </span>    
+                            )}
+                        </div>
                     </div>
                     <PostList 
                         style={{flex: '1 1 100%'}}

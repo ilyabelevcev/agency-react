@@ -10,6 +10,32 @@
         margin-right: 10px
     .button
         flex: 1 1 20%
+    .blog__pages-wrapper
+        display: flex
+        align-items: center
+        justify-content: space-between
+        margin: 30px 0px
+        width: 100%
+        .blog__count-list
+            display: flex
+            .blog__count-item
+                font-size: 18px
+                padding: 10px
+                color: #5C2000
+                cursor: pointer
+                &.current-limit
+                    background-color: #cccccc89
+                    border-radius: 6px
+        .blog__pages-list
+            display: flex
+            .blog__pages-item
+                font-size: 18px
+                padding: 10px
+                color: #5C2000
+                cursor: pointer
+                &.current-page
+                    background-color: #cccccc89
+                    border-radius: 6px
     .blog__posts-heading
         text-align: center
         color: currentColor
@@ -59,19 +85,6 @@
                 padding: 5px 15px
                 &:not(:last-child)
                     margin-right: 25px
-    .blog__pages-list
-        width: 100%
-        display: flex
-        justify-content: flex-end
-        margin: 30px 0px
-        .blog__pages-item
-            font-size: 18px
-            padding: 10px
-            color: #5C2000
-            cursor: pointer
-            &.current-page
-                background-color: #cccccc89
-                border-radius: 6px
 
 @media screen and (max-width: 1040px)
     .blog
@@ -79,6 +92,8 @@
             flex-direction: column
             flex-wrap: nowrap
             margin: 0
+            .blog__list-item
+                min-height: auto
 
 @media screen and (max-width: 650px)
     .blog
@@ -91,7 +106,12 @@
         .button
             flex: 1 1 100%
             max-width: 50%
-        .blog__pages-list
-            justify-content: center
-            .blog__pages-item
-                padding: 6px
+        .blog__pages-wrapper
+            flex-direction: column-reverse
+            .blog__count-list
+                .blog__count-item
+                    padding: 6px
+            .blog__pages-list
+                margin-bottom: 10px
+                .blog__pages-item
+                    padding: 6px
