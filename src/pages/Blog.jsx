@@ -46,7 +46,6 @@ const Blog = () => {
 
     const changePage = (page) => {
         setPage(page)
-        fetchPosts(limit,page)
     }
 
     const createPost = (newPost) => {

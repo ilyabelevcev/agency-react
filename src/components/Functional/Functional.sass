@@ -1,0 +1,67 @@
+.home
+    padding: 50px 0 100px 0
+    .home__container
+        display: flex
+        align-items: center
+        flex-direction: column
+    .home__heading
+        color: #5C2000
+        font-size: 30px
+        margin-bottom: 15px
+        font-weight: 500
+        text-align: center
+    .home__descr
+        color: #5C2000
+        font-size: 16px
+        text-align: center
+    .home__functional
+        margin-top: 30px
+    .home__functional-heading
+        font-size: 22px
+        font-weight: 500
+        margin-bottom: 15px
+        padding-left: 15px
+    .home__functional-link
+        color: #5C2000
+        transition: 0.2s linear
+        &:hover
+            color: #16CD53
+    .home__functional-list
+        display: flex
+        align-items: center
+        flex-wrap: wrap
+        margin: -10px
+        &:not(:last-child)
+            margin-bottom: 30px
+        .home__functional-item
+            line-height: 1.4
+            margin: 10px
+            flex: 1 1 40%
+            padding: 10px
+            color: #5C2000
+            &:hover
+                background-color: #00000014
+
+@media screen and (max-width: 1040px)
+    .home
+        .home__functional-list
+            flex-direction: column
+            flex-wrap: nowrap
+            margin: 0
+            .home__functional-item
+                width: 100%
+
+@media screen and (max-width: 650px)
+    .home
+        .home__heading
+            font-size: 25px
+        .home__descr
+            font-size: 14px
+        .home__functional-heading
+            font-size: 20px
+            padding-left: 25px
+        .home__functional-list
+            &:not(:last-child)
+                margin-bottom: 15px
+            .home__functional-item
+                font-size: 12px
